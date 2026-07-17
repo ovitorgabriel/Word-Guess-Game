@@ -48,6 +48,13 @@ class App(ttk.Window):
         self.message_label = ttk.Label(self, text="")
         self.message_label.pack(pady=15)
 
+        self.restart_button = ttk.Button(
+            self,
+            text = "Jogar novamente",
+            bootstyle = PRIMARY,
+            command = self.restart_game
+        )
+
     def try_letter(self):
         letter = self.entry.get()
 
@@ -57,6 +64,22 @@ class App(ttk.Window):
         self.word_label.config(text=self.jogo.visible_word())
 
         self.entry.delete(0, "end")
+
+        if status in ("vitoria", "derrota"):
+            self.entry.config(state="desabilitado")
+            self.restart_button.pack(pady=10)
+
+    def restart_game(self):
+        self.jogo.restart()
+
+        self.word_label.config(text=self.jogo.visible_word())
+        self.message_label.config(text="")
+
+        self.entry.config(state="normal")
+        self.entry.delete(0, "end")
+        self.entry.focus()
+
+        self.restart_button.pack_forget()
 
 if __name__ == "__main__":
     app = App()
