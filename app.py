@@ -1,3 +1,5 @@
+from email.mime import image
+
 import ttkbootstrap as ttk
 from ttkbootstrap.constants import *
 from jogo import WordGuessGame
@@ -76,12 +78,12 @@ class App(ttk.Window):
         if status == "vitoria":
             self.entry.config(state="desabilitado")
             self.restart_button.pack(pady=10)
-            self.show_result_image("images/victory.png")
+            self.show_result_image("imagens/vitoria.jpg")
         
         elif status == "derrota":
             self.entry.config(state="desabilitado")
             self.restart_button.pack(pady=10)
-            self.show_result_image("images/defeat.png")
+            self.show_result_image("imagens/derrota.png")
 
     def restart_game(self):
         self.jogo.restart()
