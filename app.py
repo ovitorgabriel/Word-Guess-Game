@@ -1,6 +1,7 @@
 import ttkbootstrap as ttk
 from ttkbootstrap.constants import *
 from jogo import WordGuessGame
+from PIL import Image, ImageTk
 
 #Inicio do app
 class App(ttk.Window):
@@ -48,6 +49,9 @@ class App(ttk.Window):
         self.message_label = ttk.Label(self, text="")
         self.message_label.pack(pady=15)
 
+        self.image_label = ttk.Label(self)
+        self.image_label.pack(pady=10)
+
         self.restart_button = ttk.Button(
             self,
             text = "Jogar novamente",
@@ -69,6 +73,16 @@ class App(ttk.Window):
             self.entry.config(state="desabilitado")
             self.restart_button.pack(pady=10)
 
+        if status == "vitoria":
+            self.entry.config(state="desabilitado")
+            self.restart_button.pack(pady=10)
+            self.show_result_image("images/victory.png")
+        
+        elif status == "derrota":
+            self.entry.config(state="desabilitado")
+            self.restart_button.pack(pady=10)
+            self.show_result_image("images/defeat.png")
+
     def restart_game(self):
         self.jogo.restart()
 
@@ -80,6 +94,13 @@ class App(ttk.Window):
         self.entry.focus()
 
         self.restart_button.pack_forget()
+    
+    def show_result_image(self, image_path):
+        image = Image.open(image_path)
+        image = image.resize((200, 200))
+
+        self.result_image = ImageTk.PhotoImage(image)
+        self.image_label.config(image=self.result_image)
 
 if __name__ == "__main__":
     app = App()
